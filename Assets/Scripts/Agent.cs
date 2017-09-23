@@ -13,7 +13,7 @@ public class Agent : MonoBehaviour {
     }
 
     public State curState = State.wait;
-    public GameObject target;
+    public Transform target;
     public Transform[] path;
 
 	// Use this for initialization
