@@ -61,39 +61,26 @@ public class Agent : MonoBehaviour {
     }
 
     void Wander() {
-        if (wander_target == null)
-        {
+        if (wander_target == null) {
             wander_target = new GameObject("Wanderer");
             wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
         }
 
         float distance = Vector2.Distance(wander_target.transform.position, transform.position);
-        if (distance < 1.0f)
-        {
+        if (distance < 1.0f) {
             wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
         }
 
         DynamicArrival(distance);
-
-        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(wander_target.transform.position - transform.position), rotation_speed * Time.deltaTime));
-
-        Vector3 displacement = wander_target.transform.position - transform.position;
-        displacement = displacement.normalized;
-        
-        transform.position += displacement * speed * Time.deltaTime;
+        MoveTo(wander_target.transform);
     }
 
     void Pursue() {
-        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime));
-
-        Vector3 displacement = target.position - transform.position;
-        displacement = displacement.normalized;
-
         float distance = Vector2.Distance(target.position, transform.position);
         DynamicArrival(distance);
 
         if (distance > 1.0f) {
-            transform.position += displacement * speed * Time.deltaTime;
+            MoveTo(target);
         }
     }
 
@@ -106,19 +93,12 @@ public class Agent : MonoBehaviour {
         {
             //Check if within range of path point to move to next point
             float distance = Vector2.Distance(path[path_index + 1].position, transform.position);
-            if (distance < 0.1f)
-            {
+            if (distance < 0.1f) {
                 ++path_index;
             }
 
             DynamicArrival(distance);
-
-            Vector3 displacement = path[path_index + 1].position - transform.position;
-            displacement = displacement.normalized;
-
-        //Update the rotation and position of the agent according to the next point in the path
-            transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime));
-            transform.position += displacement * speed * Time.deltaTime;
+            MoveTo(path[path_index + 1]);
         }
     }
 
@@ -132,6 +112,16 @@ public class Agent : MonoBehaviour {
         {
             speed = move_speed;
         }
+    }
+
+    void MoveTo(Transform t)
+    {
+        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(t.position - transform.position), rotation_speed * Time.deltaTime));
+
+        Vector3 displacement = t.position - transform.position;
+        displacement = displacement.normalized;
+
+        transform.position += displacement * speed * Time.deltaTime;
     }
 
     Quaternion normalize(Quaternion q) {
