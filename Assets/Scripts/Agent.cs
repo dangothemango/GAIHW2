@@ -91,6 +91,7 @@ public class Agent : MonoBehaviour {
     void Evade()
     {
         evade_target.position = target.InverseTransformPoint(transform.position);
+        DynamicArrival(999);
         RotateTowards(evade_target);
         MoveTo(evade_target);
     }
