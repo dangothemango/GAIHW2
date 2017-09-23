@@ -117,6 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 234080103}
   - component: {fileID: 234080102}
+  - component: {fileID: 234080104}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -179,6 +180,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234080104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 234080101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b76be12e7c9534cbb5334af901577d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curState: 3
+  target: {fileID: 774612094}
+  path: []
 --- !u!1 &718493381
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 774612094}
   - component: {fileID: 774612093}
+  - component: {fileID: 774612095}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -351,6 +367,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &774612095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 774612092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b76be12e7c9534cbb5334af901577d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curState: 2
+  target: {fileID: 234080103}
+  path: []
 --- !u!1 &1412485532
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412485534}
   - component: {fileID: 1412485533}
+  - component: {fileID: 1412485535}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -422,3 +453,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1412485535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1412485532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b76be12e7c9534cbb5334af901577d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curState: 1
+  target: {fileID: 0}
+  path: []
