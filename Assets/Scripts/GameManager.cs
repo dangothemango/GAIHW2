@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
             return;
         }
         INSTANCE = this;
+        AdvanceStory();
 	}
 	
 	// Update is called once per frame
@@ -48,10 +49,14 @@ public class GameManager : MonoBehaviour {
                 storyCounter++;
                 break;
             case 4:
-                SpawnHunterReleaseWolf();
+                ReactivateRed();
                 storyCounter++;
                 break;
             case 5:
+                SpawnHunterReleaseWolf();
+                storyCounter++;
+                break;
+            case 6:
                 EndStory();
                 break;
         }
@@ -74,14 +79,22 @@ public class GameManager : MonoBehaviour {
     void StopRedAndWolf() {
         wolf.SetState(Agent.State.wait);
         red.SetState(Agent.State.wait);
+        red.GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine(WaitAndAdvanceStory(2f));
     }
+
 
     void SendWolfToGrandma() {
         wolf.SetState(Agent.State.pursue);
         wolf.SetTarget(grandmasHouse);
         red.SetState(Agent.State.path);
+        StartCoroutine(WaitAndAdvanceStory(3f));
     }
+
+    void ReactivateRed() {
+        red.GetComponent<BoxCollider2D>().enabled = true;
+    }
+
 
     void SpawnHunterReleaseWolf() {
         Destroy(red.gameObject);

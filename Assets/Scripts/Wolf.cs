@@ -29,6 +29,7 @@ public class Wolf : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log("Collide");
         GameManager.INSTANCE.AdvanceStory();
     }
 }
