@@ -17,7 +17,9 @@ public class Agent : MonoBehaviour {
     public Transform[] path;
     public float rotation_speed;
     public float move_speed;
+    public float slow_down_dist;
     public int path_index;
+    public float speed;
     public GameObject wander_target;
 
     // Use this for initialization
@@ -71,12 +73,14 @@ public class Agent : MonoBehaviour {
             wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
         }
 
+        DynamicArrival(distance);
+
         transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(wander_target.transform.position - transform.position), rotation_speed * Time.deltaTime));
 
         Vector3 displacement = wander_target.transform.position - transform.position;
         displacement = displacement.normalized;
         
-        transform.position += displacement * move_speed * Time.deltaTime;
+        transform.position += displacement * speed * Time.deltaTime;
     }
 
     void Pursue() {
@@ -84,9 +88,12 @@ public class Agent : MonoBehaviour {
 
         Vector3 displacement = target.position - transform.position;
         displacement = displacement.normalized;
-        
-        if (Vector2.Distance(target.position, transform.position) > 1.0f) {
-            transform.position += displacement * move_speed * Time.deltaTime;
+
+        float distance = Vector2.Distance(target.position, transform.position);
+        DynamicArrival(distance);
+
+        if (distance > 1.0f) {
+            transform.position += displacement * speed * Time.deltaTime;
         }
     }
 
@@ -99,17 +106,31 @@ public class Agent : MonoBehaviour {
         {
             //Check if within range of path point to move to next point
             float distance = Vector2.Distance(path[path_index + 1].position, transform.position);
-            if (distance < 1.0f)
+            if (distance < 0.1f)
             {
                 ++path_index;
             }
-            
+
+            DynamicArrival(distance);
+
             Vector3 displacement = path[path_index + 1].position - transform.position;
             displacement = displacement.normalized;
 
         //Update the rotation and position of the agent according to the next point in the path
             transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime));
-            transform.position += displacement * move_speed * Time.deltaTime;
+            transform.position += displacement * speed * Time.deltaTime;
+        }
+    }
+
+    void DynamicArrival(float distance)
+    {
+        if (distance < slow_down_dist)
+        {
+            speed = move_speed * distance / slow_down_dist;
+        }
+        else
+        {
+            speed = move_speed;
         }
     }
 
