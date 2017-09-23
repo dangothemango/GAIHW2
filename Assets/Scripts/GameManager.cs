@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public Agent wolf;
     public Transform wolfSpawn;
     public Transform grandmasHouse;
-    int storyCounter = 0;
+    public int storyCounter = 0;
     
 
 	// Use this for initialization
@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour {
                 SpawnHunterReleaseWolf();
                 storyCounter++;
                 break;
+            case 5:
+                EndStory();
+                break;
         }
     }
 
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour {
     void StopRedAndWolf() {
         wolf.SetState(Agent.State.wait);
         red.SetState(Agent.State.wait);
+        StartCoroutine(WaitAndAdvanceStory(2f));
     }
 
     void SendWolfToGrandma() {
@@ -80,10 +84,17 @@ public class GameManager : MonoBehaviour {
     }
 
     void SpawnHunterReleaseWolf() {
+        Destroy(red.gameObject);
         hunter.transform.position = hunterSpawn.position;
         wolf.SetState(Agent.State.wander);
+        wolf.SetTarget(hunter.transform);
         hunter.SetState(Agent.State.pursue);
         hunter.SetTarget(wolf.transform);
+    }
+
+    void EndStory() {
+        wolf.SetState(Agent.State.wait);
+        hunter.SetState(Agent.State.wait);
     }
 
     IEnumerator WaitAndAdvanceStory(float seconds) {
