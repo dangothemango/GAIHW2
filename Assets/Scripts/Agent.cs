@@ -49,9 +49,13 @@ public class Agent : MonoBehaviour {
         }
 	}
 
-    void SetState(State s) {
+    public void SetState(State s) {
         Debug.Log(s);
         curState = s;
+    }
+
+    public void SetTarget(Transform t) {
+        target = t;
     }
 
     void Wander() {
@@ -74,6 +78,7 @@ public class Agent : MonoBehaviour {
     }
 
     void Pursue() {
+        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime));
         Vector3 displacement = target.position - transform.position;
         displacement = displacement.normalized;
         
@@ -99,7 +104,13 @@ public class Agent : MonoBehaviour {
             Vector3 displacement = path[path_index + 1].position - transform.position;
             displacement = displacement.normalized;
 
+        //Update the rotation and position of the agent according to the next point in the path
+            transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime));
             transform.position += displacement * move_speed * Time.deltaTime;
         }
+    }
+
+    Quaternion normalize(Quaternion q) {
+        return Quaternion.Euler(0, 0, q.eulerAngles.z);
     }
 }
