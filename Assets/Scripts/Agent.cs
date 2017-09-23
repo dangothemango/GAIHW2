@@ -18,14 +18,12 @@ public class Agent : MonoBehaviour {
     public float rotation_speed;
     public float move_speed;
     public float slow_down_dist;
+    public Transform wander_target;
     public int path_index;
-    public float speed;
-    public Transform evade_target;
-    public GameObject wander_target;
+    Vector3 dir = Vector3.zero;
 
     // Use this for initialization
     void Start () {
-        evade_target = transform;
 	}
 	
 	// Update is called once per frame
@@ -62,41 +60,34 @@ public class Agent : MonoBehaviour {
     }
 
     void Wander() {
-        if (wander_target == null) {
-            wander_target = new GameObject("Wanderer");
-            wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
+        if (dir==Vector3.zero || Random.Range(0, 1.0f) > .99f) {
+            newDir();
         }
+        Debug.DrawLine(transform.position, transform.position + dir,Color.black);
+        transform.position = Vector2.MoveTowards(transform.position, transform.position+dir, Time.deltaTime * move_speed/2);
+        RotateTowards(transform.position+dir);
+    }
 
-        float distance = Vector2.Distance(wander_target.transform.position, transform.position);
-        if (distance < 1.0f) {
-            wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
-        }
-
-        DynamicArrival(distance);
-        RotateTowards(wander_target.transform);
-        MoveTo(wander_target.transform);
+    public void newDir() {
+        dir = (Vector2)wander_target.position + Random.insideUnitCircle - (Vector2)transform.position;
     }
 
     void Pursue() {
         float distance = Vector2.Distance(target.position, transform.position);
-        DynamicArrival(distance);
 
-        if (distance > 1.0f)
+
+        if (distance > .5f)
         {
-            RotateTowards(target);
-            MoveTo(target);
+            RotateTowards(target.position);
+            transform.position = Vector2.MoveTowards(transform.position, target.position,Time.deltaTime* move_speed * Mathf.Min(distance / slow_down_dist, 1));
         }
     }
 
     void Evade()
     {
-        Vector3 displacement = transform.position - target.position;
-        displacement = displacement.normalized;
-
-        evade_target.position = transform.position + displacement;
-
-        RotateTowards(evade_target);
-        MoveTo(evade_target);
+        Vector3 v = transform.position - target.position;
+        RotateTowards(transform.position+v);
+        transform.position = Vector2.MoveTowards(transform.position, transform.position+v, Time.deltaTime * move_speed);
     }
 
     void FollowPath() {
@@ -108,38 +99,17 @@ public class Agent : MonoBehaviour {
                 ++path_index;
             }
 
-            DynamicArrival(distance);
-            RotateTowards(path[path_index + 1]);
-            MoveTo(path[path_index + 1]);
+            distance = Vector2.Distance(target.position, transform.position);
+
+            transform.position = Vector2.MoveTowards(transform.position, path[path_index+1  ].position, Time.deltaTime * move_speed * Mathf.Min(distance / slow_down_dist, 1));
+            RotateTowards(path[path_index + 1].position);
         }
     }
 
-    void DynamicArrival(float distance)
+    void RotateTowards(Vector3 position)
     {
-        if (distance < slow_down_dist)
-        {
-            speed = move_speed * distance / slow_down_dist;
-        }
-        else
-        {
-            speed = move_speed;
-        }
+        Vector3 offset = (position - transform.position).normalized;
+        transform.right = Vector3.MoveTowards(transform.right, offset, Time.deltaTime * rotation_speed);
     }
-
-    void RotateTowards(Transform t)
-    {
-        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(t.position - transform.position), rotation_speed * Time.deltaTime));
-    }
-
-    void MoveTo(Transform t)
-    {
-        Vector3 displacement = t.position - transform.position;
-        displacement = displacement.normalized;
-
-        transform.position += displacement * speed * Time.deltaTime;
-    }
-
-    Quaternion normalize(Quaternion q) {
-        return Quaternion.Euler(0, 0, q.eulerAngles.z);
-    }
+    
 }
