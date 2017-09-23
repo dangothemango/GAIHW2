@@ -38,8 +38,18 @@ public class Agent : MonoBehaviour {
             case State.path:
                 FollowPath();
                 break;
+            default:
+                Debug.LogError(string.Format("{0} is not a valid state",curState));
+
+                SetState(State.wait);
+                break;
         }
 	}
+
+    void SetState(State s) {
+        Debug.Log(s);
+        curState = s;
+    }
 
     void Wander() {
 
