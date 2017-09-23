@@ -5,6 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager INSTANCE;
+    public Agent red;
+    public Agent hunter;
+    public Agent wolf;
 
 	// Use this for initialization
 	void Start () {

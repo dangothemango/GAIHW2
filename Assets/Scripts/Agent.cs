@@ -43,7 +43,6 @@ public class Agent : MonoBehaviour {
                 break;
             default:
                 Debug.LogError(string.Format("{0} is not a valid state",curState));
-
                 SetState(State.wait);
                 break;
         }
