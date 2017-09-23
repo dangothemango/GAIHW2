@@ -71,6 +71,8 @@ public class Agent : MonoBehaviour {
             wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
         }
 
+        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(wander_target.transform.position - transform.position), rotation_speed * Time.deltaTime));
+
         Vector3 displacement = wander_target.transform.position - transform.position;
         displacement = displacement.normalized;
         
@@ -79,6 +81,7 @@ public class Agent : MonoBehaviour {
 
     void Pursue() {
         transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime));
+
         Vector3 displacement = target.position - transform.position;
         displacement = displacement.normalized;
         
