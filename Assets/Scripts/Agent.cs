@@ -48,7 +48,7 @@ public class Agent : MonoBehaviour {
         }
 	}
 
-    void SetState(State s) {
+    public void SetState(State s) {
         Debug.Log(s);
         curState = s;
     }
@@ -58,7 +58,7 @@ public class Agent : MonoBehaviour {
     }
 
     void Pursue() {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime);
+        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime));
         transform.position += transform.forward * move_speed * Time.deltaTime;
     }
 
@@ -74,7 +74,10 @@ public class Agent : MonoBehaviour {
         }
 
         //Update the rotation and position of the agent according to the next point in the path
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime);
+        transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime));
         transform.position += transform.forward * move_speed * Time.deltaTime;
     }
+
+    Quaternion normalize(Quaternion q) {
+        return new Quaternion(0, 0, q.eulerAngles.z);
 }
