@@ -19,6 +19,7 @@ public class Wolf : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.name == "Hunter") {
             a.SetState(Agent.State.evade);
+            a.SetTarget(other.transform);
         }
     }
 

@@ -20,6 +20,7 @@ public class Agent : MonoBehaviour {
     public float slow_down_dist;
     public int path_index;
     public float speed;
+    public Transform evade_target;
     public GameObject wander_target;
 
     // Use this for initialization
@@ -72,6 +73,7 @@ public class Agent : MonoBehaviour {
         }
 
         DynamicArrival(distance);
+        RotateTowards(wander_target.transform);
         MoveTo(wander_target.transform);
     }
 
@@ -79,13 +81,19 @@ public class Agent : MonoBehaviour {
         float distance = Vector2.Distance(target.position, transform.position);
         DynamicArrival(distance);
 
-        if (distance > 1.0f) {
+        if (distance > 1.0f)
+        {
+            RotateTowards(target);
             MoveTo(target);
         }
     }
 
-    void Evade() {
-
+    void Evade()
+    {
+        evade_target.position = target.InverseTransformPoint(transform.position);
+        DynamicArrival(999);
+        RotateTowards(evade_target);
+        MoveTo(evade_target);
     }
 
     void FollowPath() {
@@ -98,6 +106,7 @@ public class Agent : MonoBehaviour {
             }
 
             DynamicArrival(distance);
+            RotateTowards(path[path_index + 1]);
             MoveTo(path[path_index + 1]);
         }
     }
@@ -114,10 +123,13 @@ public class Agent : MonoBehaviour {
         }
     }
 
-    void MoveTo(Transform t)
+    void RotateTowards(Transform t)
     {
         transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(t.position - transform.position), rotation_speed * Time.deltaTime));
+    }
 
+    void MoveTo(Transform t)
+    {
         Vector3 displacement = t.position - transform.position;
         displacement = displacement.normalized;
 
