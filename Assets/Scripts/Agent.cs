@@ -18,6 +18,7 @@ public class Agent : MonoBehaviour {
     public float rotation_speed;
     public float move_speed;
     public int path_index;
+    public GameObject wander_target;
 
     // Use this for initialization
     void Start () {
@@ -54,7 +55,22 @@ public class Agent : MonoBehaviour {
     }
 
     void Wander() {
+        if (wander_target == null)
+        {
+            wander_target = new GameObject("Wanderer");
+            wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
+        }
 
+        float distance = Vector2.Distance(wander_target.transform.position, transform.position);
+        if (distance < 1.0f)
+        {
+            wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
+        }
+
+        Vector3 displacement = wander_target.transform.position - transform.position;
+        displacement = displacement.normalized;
+        
+        transform.position += displacement * move_speed * Time.deltaTime;
     }
 
     void Pursue() {
