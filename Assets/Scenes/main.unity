@@ -344,6 +344,36 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 779e124de2de9b94cbdb5869ba5b5643, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &535164390 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1502071654944852, guid: 779e124de2de9b94cbdb5869ba5b5643,
+    type: 2}
+  m_PrefabInternal: {fileID: 305415500}
+--- !u!61 &535164391
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 535164390}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.12, y: 5.12}
+  m_EdgeRadius: 0
 --- !u!1 &612080144
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +623,8 @@ MonoBehaviour:
   hunterSpawn: {fileID: 0}
   wolf: {fileID: 1412485535}
   wolfSpawn: {fileID: 0}
+  grandmasHouse: {fileID: 0}
+  storyCounter: 0
 --- !u!114 &774612095 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114974058372809760, guid: 779e124de2de9b94cbdb5869ba5b5643,
@@ -1149,6 +1181,66 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1743114755 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1620736713699872, guid: 7edea506dc059814bbe5191cdd9d2e9f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1133199950}
+--- !u!61 &1743114756
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1743114755}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.12, y: 5.12}
+  m_EdgeRadius: 0
+--- !u!1 &1762463107 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1928228331448894, guid: e0559e81bdb5a7249b8b5eca62b136d6,
+    type: 2}
+  m_PrefabInternal: {fileID: 245780628}
+--- !u!61 &1762463108
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1762463107}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.12, y: 5.12}
+  m_EdgeRadius: 0
 --- !u!1 &2042120667
 GameObject:
   m_ObjectHideFlags: 0
