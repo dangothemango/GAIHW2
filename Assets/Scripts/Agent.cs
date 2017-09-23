@@ -25,7 +25,7 @@ public class Agent : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        evade_target = transform;
 	}
 	
 	// Update is called once per frame
@@ -90,8 +90,11 @@ public class Agent : MonoBehaviour {
 
     void Evade()
     {
-        evade_target.position = target.InverseTransformPoint(transform.position);
-        DynamicArrival(999);
+        Vector3 displacement = transform.position - target.position;
+        displacement = displacement.normalized;
+
+        evade_target.position = transform.position + displacement;
+
         RotateTowards(evade_target);
         MoveTo(evade_target);
     }
