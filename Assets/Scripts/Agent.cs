@@ -72,14 +72,9 @@ public class Agent : MonoBehaviour {
         {
             wander_target.transform.position = new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
         }
-        if (distance < slow_down_dist)
-        {
-            speed = move_speed * distance / slow_down_dist;
-        }
-        else
-        {
-            speed = move_speed;
-        }
+
+        DynamicArrival(distance);
+
         transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(wander_target.transform.position - transform.position), rotation_speed * Time.deltaTime));
 
         Vector3 displacement = wander_target.transform.position - transform.position;
@@ -95,14 +90,8 @@ public class Agent : MonoBehaviour {
         displacement = displacement.normalized;
 
         float distance = Vector2.Distance(target.position, transform.position);
-        if (distance < slow_down_dist)
-        {
-            speed = move_speed * distance / slow_down_dist;
-        }
-        else
-        {
-            speed = move_speed;
-        }
+        DynamicArrival(distance);
+
         if (distance > 1.0f) {
             transform.position += displacement * speed * Time.deltaTime;
         }
@@ -121,20 +110,27 @@ public class Agent : MonoBehaviour {
             {
                 ++path_index;
             }
-            if (distance < slow_down_dist)
-            {
-                speed = move_speed * distance / slow_down_dist;
-            }
-            else
-            {
-                speed = move_speed;
-            }
+
+            DynamicArrival(distance);
+
             Vector3 displacement = path[path_index + 1].position - transform.position;
             displacement = displacement.normalized;
 
         //Update the rotation and position of the agent according to the next point in the path
             transform.rotation = normalize(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime));
             transform.position += displacement * speed * Time.deltaTime;
+        }
+    }
+
+    void DynamicArrival(float distance)
+    {
+        if (distance < slow_down_dist)
+        {
+            speed = move_speed * distance / slow_down_dist;
+        }
+        else
+        {
+            speed = move_speed;
         }
     }
 
