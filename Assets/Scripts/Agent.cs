@@ -53,6 +53,10 @@ public class Agent : MonoBehaviour {
         curState = s;
     }
 
+    public void SetTarget(Transform t) {
+        target = t;
+    }
+
     void Wander() {
 
     }
