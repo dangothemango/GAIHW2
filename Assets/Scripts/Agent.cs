@@ -15,9 +15,12 @@ public class Agent : MonoBehaviour {
     public State curState = State.wait;
     public Transform target;
     public Transform[] path;
+    public float rotation_speed;
+    public float move_speed;
+    public int path_index;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -56,7 +59,8 @@ public class Agent : MonoBehaviour {
     }
 
     void Pursue() {
-
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotation_speed * Time.deltaTime);
+        transform.position += transform.forward * move_speed * Time.deltaTime;
     }
 
     void Evade() {
@@ -64,6 +68,14 @@ public class Agent : MonoBehaviour {
     }
 
     void FollowPath() {
+        //Check if within range of path point to move to next point
+        float distance = Vector3.Distance(path[path_index+1].position, transform.position);
+        if (distance < 1.0f) {
+            ++path_index;
+        }
 
+        //Update the rotation and position of the agent according to the next point in the path
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path[path_index+1].position - transform.position), rotation_speed * Time.deltaTime);
+        transform.position += transform.forward * move_speed * Time.deltaTime;
     }
 }
