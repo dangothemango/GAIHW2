@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour {
     void EndStory() {
         wolf.SetState(Agent.State.wait);
         hunter.SetState(Agent.State.wait);
+        hunter.enabled = false;
+        wolf.enabled = false;
     }
 
     IEnumerator WaitAndAdvanceStory(float seconds) {

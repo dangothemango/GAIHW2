@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Red : MonoBehaviour {
+public class DrawCircle : MonoBehaviour {
+
+    public float radius = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -11,6 +13,10 @@ public class Red : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        
 	}
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 }
