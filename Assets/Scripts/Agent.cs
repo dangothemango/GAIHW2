@@ -32,7 +32,6 @@ public class Agent : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        evade_target = transform;
         DisplayText = GetComponent<Text>();
         line = GetComponent<LineRenderer>();
         circle = GetComponent<SpriteRenderer>();
@@ -97,7 +96,6 @@ public class Agent : MonoBehaviour {
 
     void Pursue() {
         float distance = Vector2.Distance(target.position, transform.position);
-        DynamicArrival(distance);
         ShowLine(target.position);
 
 
@@ -113,8 +111,7 @@ public class Agent : MonoBehaviour {
         Vector3 v = transform.position - target.position;
         RotateTowards(transform.position+v);
         transform.position = Vector2.MoveTowards(transform.position, transform.position+v, Time.deltaTime * move_speed);
-
-        Vector3 v = transform.position - target.position;
+        
         ShowLine(transform.position + v);
     }
 
